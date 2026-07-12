@@ -1,0 +1,5 @@
+relationship c02682a3-ecc0-e75f-1b99-e5dbaf5fb327
+	crossFilteringBehavior: bothDirections
+	fromColumn: SampleSuperstore.'Order date'
+	toColumn: 'Date Table'.Date
+

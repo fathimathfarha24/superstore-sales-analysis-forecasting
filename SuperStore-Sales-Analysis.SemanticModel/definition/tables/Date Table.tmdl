@@ -1,0 +1,62 @@
+table 'Date Table'
+	lineageTag: 199c0555-db9c-4677-becc-dd06176f7b75
+	dataCategory: Time
+
+	column Date
+		isKey
+		formatString: Short Date
+		lineageTag: 58029d5e-cd1d-4ec0-8416-b7224cfe742c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Year = YEAR('Date Table'[Date])
+		dataType: int64
+		formatString: 0
+		lineageTag: a67dcf1f-f39a-439d-9228-ebc46ed4d3f9
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Name' = FORMAT('Date Table'[Date],"mmmm")
+		dataType: string
+		lineageTag: cca10d1a-101e-4d03-af23-8cd25188a9a7
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month No' = MONTH('Date Table'[Date])
+		formatString: 0
+		lineageTag: 3707fb2f-f432-446e-a97e-cff882c42e3b
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter = "Q" & QUARTER('Date Table'[Date])
+		lineageTag: f789c13c-7992-40d3-af96-7d607eefed2c
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Year Month' = FORMAT('Date Table'[Date],"mmm yyyy")
+		dataType: dateTime
+		formatString: mmmm\, yyyy
+		lineageTag: 9a9636f0-062b-414f-a541-d74952cfd24b
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	partition 'Date Table' = calculated
+		mode: import
+		source = CALENDAR(MIN('SampleSuperstore'[Order Date]),MAX('SampleSuperstore'[Order Date]))
+
+	annotation PBI_Id = f119bd0a12354efd9702a3f87b95addf
+

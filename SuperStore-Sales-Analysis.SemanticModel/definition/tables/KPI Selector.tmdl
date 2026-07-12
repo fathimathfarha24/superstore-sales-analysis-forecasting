@@ -1,0 +1,49 @@
+table 'KPI Selector'
+	lineageTag: 05765d2d-0f09-40e6-a403-5fc53608acd8
+
+	column 'KPI Selector'
+		lineageTag: a99744be-d828-4fae-9aee-5a66da98e592
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'KPI Selector Order'
+
+		relatedColumnDetails
+			groupByColumn: 'KPI Selector Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'KPI Selector Fields'
+		isHidden
+		lineageTag: e8373cdb-fe6c-4d67-a266-73cc3931f665
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'KPI Selector Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'KPI Selector Order'
+		isHidden
+		formatString: 0
+		lineageTag: 79c241d1-f23d-4c37-a66f-a39f91cc9bc4
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'KPI Selector' = calculated
+		mode: import
+		source =
+				{
+				    ("Total Profit", NAMEOF('Measure table'[Total Profit]), 0),
+				    ("Total Quantity", NAMEOF('Measure table'[Total Quantity]), 1),
+				    ("Total Sales", NAMEOF('Measure table'[Total Sales]), 2)
+				}
+
+	annotation PBI_Id = 59534f1d211d474f890e1396fff3271d
+

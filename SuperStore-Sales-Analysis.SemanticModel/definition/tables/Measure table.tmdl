@@ -1,0 +1,61 @@
+table 'Measure table'
+	lineageTag: 10d4f23d-8338-47bb-9043-d674bfdca607
+
+	measure 'Total Profit' = SUM(SampleSuperstore[Profit])
+		lineageTag: 45c32c9c-758a-46c3-bf9a-d10879e960a9
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Sales' = SUM(SampleSuperstore[Sales])
+		lineageTag: 00dc31df-8d79-430b-a475-7a39830dc358
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Quantity' = SUM(SampleSuperstore[Quantity])
+		formatString: 0
+		lineageTag: 90dfdfa2-70cf-496a-99e8-f025473d6531
+
+	measure 'Profit Margin %' = DIVIDE(SUM('SampleSuperstore'[Profit]),SUM('SampleSuperstore'[Sales]),0)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 825ae11a-c16f-4a0c-b6de-9d93ccce352d
+
+	measure 'Previous Year Sales' = CALCULATE([Total Sales],SAMEPERIODLASTYEAR('Date Table'[Date]))
+		lineageTag: 4daebb69-4ace-47c4-8c85-873b45446a28
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'YoY Growth %' = DIVIDE([Total Sales]-[Previous Year Sales],[Previous Year Sales])
+		lineageTag: d93747b2-5cb1-4ba5-a464-a0261e00692f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Profit %' =
+			
+			DIVIDE(
+			    SUM(SampleSuperstore[Profit]),
+			    CALCULATE(SUM(SampleSuperstore[Profit]), ALL(SampleSuperstore)
+			))
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: f9624875-19ec-413c-b399-d64484f86dc8
+
+	measure 'Average Discount' = AVERAGE(SampleSuperstore[Discount])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: d0c3af55-08c0-40a2-858d-11e57115aac2
+
+	column Column
+		formatString: 0
+		lineageTag: 7999db58-792a-446a-81b3-0924572b584a
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Measure table' = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = b6d1a00c5ea14fb1a15637b31ee93257
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+

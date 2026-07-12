@@ -1,0 +1,158 @@
+table SampleSuperstore
+	lineageTag: 0f7a47ba-1f42-4067-a481-27651931e4fb
+
+	column 'Order ID'
+		dataType: string
+		lineageTag: 0c36a8bb-36ab-42a9-b550-8ecb8908ff74
+		summarizeBy: none
+		sourceColumn: Order ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Order date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 3f9aa263-6673-4bdd-8f7b-981df9469947
+		summarizeBy: none
+		sourceColumn: Order date
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Ship Mode'
+		dataType: string
+		lineageTag: 086a2d76-1e95-4f7a-93e1-8b3298d5701e
+		summarizeBy: none
+		sourceColumn: Ship Mode
+
+		annotation SummarizationSetBy = Automatic
+
+	column Segment
+		dataType: string
+		lineageTag: ef70b9bf-f439-45fa-b8de-135bb5fb3043
+		summarizeBy: none
+		sourceColumn: Segment
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		lineageTag: 0e08c023-b7ff-4559-9622-93d0a5abbd32
+		dataCategory: Country
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		lineageTag: c97f2396-8d1d-4266-a658-9a5e7a80c4ab
+		dataCategory: City
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	column State
+		dataType: string
+		lineageTag: c9b17aff-55d1-4f3c-bbfb-f980afe4cbb5
+		dataCategory: StateOrProvince
+		summarizeBy: none
+		sourceColumn: State
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Postal Code'
+		dataType: int64
+		formatString: 0
+		lineageTag: 67e3f4ec-ea4b-46aa-8991-06fe1c1f06b7
+		dataCategory: PostalCode
+		summarizeBy: count
+		sourceColumn: Postal Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: 410e0a9d-fea6-43fa-beeb-22830b00aad4
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category
+		dataType: string
+		lineageTag: cdd2dc97-9910-40c8-8bbc-29554bd2133c
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sub-Category
+		dataType: string
+		lineageTag: c4abdc7b-48c7-49ca-a23b-fb40b1879bbd
+		summarizeBy: none
+		sourceColumn: Sub-Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sales
+		dataType: double
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: e291fb97-addc-48fd-a1bf-c1812b0bb0bb
+		summarizeBy: sum
+		sourceColumn: Sales
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 19896aca-42e7-4614-a2d2-c113e23b0acf
+		summarizeBy: sum
+		sourceColumn: Quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column Discount
+		dataType: double
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: deb744cb-b4ca-4bc3-bd2d-2cc1963827b7
+		summarizeBy: sum
+		sourceColumn: Discount
+
+		annotation SummarizationSetBy = Automatic
+
+	column Profit
+		dataType: double
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: e32f2174-bc57-47a1-b5dd-1f6e7b55f7b6
+		summarizeBy: sum
+		sourceColumn: Profit
+
+		annotation SummarizationSetBy = Automatic
+
+	partition SampleSuperstore = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\admin\Desktop\SOFTWARE\Power BI project\SampleSuperstore.csv"),[Delimiter=",", Columns=15, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Order ID", Int64.Type}, {"Order date", type date}, {"Ship Mode", type text}, {"Segment", type text}, {"Country", type text}, {"City", type text}, {"State", type text}, {"Postal Code", Int64.Type}, {"Region", type text}, {"Category", type text}, {"Sub-Category", type text}, {"Sales", type number}, {"Quantity", Int64.Type}, {"Discount", type number}, {"Profit", type number}}),
+				    #"Removed Blank Rows" = Table.SelectRows(#"Changed Type", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+				    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Removed Blank Rows", {"Order ID", "Order date", "Ship Mode", "Segment", "Country", "City", "State", "Postal Code", "Region", "Category", "Sub-Category", "Sales", "Quantity", "Discount", "Profit"}),
+				    #"Trimmed Text" = Table.TransformColumns(Table.TransformColumnTypes(#"Removed Errors", {{"Order ID", type text}, {"Order date", type text}, {"Postal Code", type text}, {"Sales", type text}, {"Quantity", type text}, {"Discount", type text}, {"Profit", type text}}, "en-IN"),{{"Order ID", Text.Trim, type text}, {"Order date", Text.Trim, type text}, {"Ship Mode", Text.Trim, type text}, {"Segment", Text.Trim, type text}, {"Country", Text.Trim, type text}, {"City", Text.Trim, type text}, {"State", Text.Trim, type text}, {"Postal Code", Text.Trim, type text}, {"Region", Text.Trim, type text}, {"Category", Text.Trim, type text}, {"Sub-Category", Text.Trim, type text}, {"Sales", Text.Trim, type text}, {"Quantity", Text.Trim, type text}, {"Discount", Text.Trim, type text}, {"Profit", Text.Trim, type text}}),
+				    #"Cleaned Text" = Table.TransformColumns(#"Trimmed Text",{{"Order ID", Text.Clean, type text}, {"Order date", Text.Clean, type text}, {"Ship Mode", Text.Clean, type text}, {"Segment", Text.Clean, type text}, {"Country", Text.Clean, type text}, {"City", Text.Clean, type text}, {"State", Text.Clean, type text}, {"Postal Code", Text.Clean, type text}, {"Region", Text.Clean, type text}, {"Category", Text.Clean, type text}, {"Sub-Category", Text.Clean, type text}, {"Sales", Text.Clean, type text}, {"Quantity", Text.Clean, type text}, {"Discount", Text.Clean, type text}, {"Profit", Text.Clean, type text}}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Cleaned Text",{{"Order date", type date}}),
+				    #"Added Prefix" = Table.TransformColumns(#"Changed Type1", {{"Order ID", each "ORD" & _, type text}}),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Added Prefix",{{"Postal Code", Int64.Type}, {"Sales", type number}, {"Quantity", Int64.Type}, {"Discount", type number}, {"Profit", type number}, {"Order ID", type text}, {"Order date", type date}, {"Ship Mode", type text}, {"Segment", type text}, {"Country", type text}, {"City", type text}, {"State", type text}, {"Region", type text}, {"Category", type text}, {"Sub-Category", type text}})
+				in
+				    #"Changed Type2"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
