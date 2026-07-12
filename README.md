@@ -98,23 +98,23 @@ The report enables users to explore sales performance through dynamic filters, K
 - PDF Report
 
 
- **Dashboard Preview**
+  **Dashboard Preview**
 
 ### Executive Overview
-![Executive Overview](<img width="1504" height="852" alt="Executive Overview" src="https://github.com/user-attachments/assets/1c99c8d9-42cf-4afe-b11b-ea73000b309b" />
-)
+
+![Executive Overview](Images/ExecutiveOverview.png)
 
 ### Profitability Analysis
-![Profitability Analysis](<img width="1502" height="857" alt="Profitability analysis" src="https://github.com/user-attachments/assets/06ed836e-41b5-42c7-9a74-d988882f8dc1" />
-)
+
+![Profitability Analysis](Images/ProfitabilityAnalysis.png)
 
 ### Geographic & Business Insights
-![Geographic Analysis](<img width="1503" height="852" alt="Geographic   Business insights" src="https://github.com/user-attachments/assets/0a238459-8592-4778-9888-26ddd11c0b53" />
-)
+
+![Geographic & Business Insights](Images/Geographic&BusinessInsights.png)
 
 ### Sales Forecast & Trend Analysis
-![Forecast Analysis](<img width="1505" height="855" alt="Sales forecast   trend analysis" src="https://github.com/user-attachments/assets/d31dc642-b2f1-4a9d-b1b6-ff4237e8dcb9" />
-)
+
+![Sales Forecast & Trend Analysis](Images/SalesForecast&TrendAnalysis.png)
 
 
  📈 Business Insights
