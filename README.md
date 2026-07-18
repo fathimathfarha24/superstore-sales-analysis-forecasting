@@ -127,7 +127,7 @@ The report enables users to explore sales performance through dynamic filters, K
 - Interactive filters enable detailed analysis by date, region, category, and sub-category.
 
 
-🚀 Getting Started
+Getting Started
 
 1. Clone this repository.
 2. Open the `.pbip` project in Microsoft Power BI Desktop.
@@ -135,7 +135,7 @@ The report enables users to explore sales performance through dynamic filters, K
 4. Explore the interactive dashboard.
 
 
-👨‍💻 Author
+Author
 
 **Fathimath Farha**
 
